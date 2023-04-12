@@ -18,6 +18,9 @@ use yii\web\IdentityInterface;
 
 class UserAuthorisation extends User implements IdentityInterface
 {
+     public const ROLE_USER = "user";
+     public const ROLE_ADMIN = "admin";
+
     public function rules()
     {
         return array_merge(parent::rules());

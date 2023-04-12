@@ -48,7 +48,7 @@ class PublicationsController extends Controller
         
         if (!$publication->save()) {
             return [
-                "error" => "Не удалось сохранить публикацию"
+                "error" => $publication->getErrors()
             ];
         }
 
@@ -57,13 +57,13 @@ class PublicationsController extends Controller
         ];
     }
 
-    public function actionGetPublications()
+    public function actionPublications()
     {
-        $limit = Yii::$app->request->get("limit");
-        $offset = Yii::$app->request->get("offset");
+        $limit = Yii::$app->request->get("limit", 10);
+        $offset = Yii::$app->request->get("offset", 0);
         $publicationQuery = UserPublication::find()
-            ->limit($limit, 10)
-            ->offset($offset, 0);
+            ->limit($limit)
+            ->offset($offset);
         $result = [];
         
         foreach ($publicationQuery->each() as $publication) {
@@ -75,16 +75,16 @@ class PublicationsController extends Controller
         ];
     }
 
-    public function adtionGetUserPublication()
+    public function adtionUserPublications()
     {
-        $limit = Yii::$app->request->get("limit");
-        $offset = Yii::$app->request->get("offset");
+        $limit = Yii::$app->request->get("limit", 10);
+        $offset = Yii::$app->request->get("offset", 0);
         $acessToken = Yii::$app->request->get("acessToken");
         $user = UserToken::findOne($acessToken);
         $publicationQuery = UserPublication::find()
-            ->andWhere('userId=:userId', [':userId' => $user->userId])
-            ->limit($limit, 10)
-            ->offset($offset, 0);
+            ->andWhere(['publication.userId' => $user->userId])
+            ->limit($limit)
+            ->offset($offset);
         $result = [];
         
         foreach ($publicationQuery->each() as $publication) {

@@ -35,23 +35,22 @@ class LoginCotroller extends Controller
             ];
         }
 
-        if (Yii::$app->security->validatePassword($password, $user->password) && $user->role == 'user') {
-            $acessToken = UserToken::generateToken($user->userId);
-
-            if ($acessToken == null) {
-                return [
-                    "error" => "Не удалось сгенерировать токен"
-                ];
-            }
-
-            return [
-                "acessToken" => $acessToken->acessToken
-            ];
-        } else {
+        if (!Yii::$app->security->validatePassword($password, $user->password) || ($user->role == $user::ROLE_ADMIN)) {
             return [
                 "error" => "Неверный пароль"
             ];
-        }       
+        }
+        $acessToken = UserToken::generateToken($user->userId);
+
+        if (empty($acessToken)) {
+            return [
+                "error" => "Не удалось сгенерировать токен"
+            ];
+        }
+
+        return [
+            "acessToken" => $acessToken->acessToken
+        ];
     }
 
     public function actionSignUp()
@@ -65,7 +64,7 @@ class LoginCotroller extends Controller
         $user->name = $name;
         $user->email = $email;
         $user->password = $hash;
-        $user->role = 'user';
+        $user->role = $user::ROLE_USER;
         
         if (!$user->save) {
             return [
