@@ -1,8 +1,9 @@
 <?php
 
-namespace common\models;
+namespace app\models;
 
-use Yii;
+use common\models\User;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -13,64 +14,47 @@ use Yii;
  * @property string $password
  * @property string $role
  *
- * @property Publication[] $publications
- * @property Token[] $tokens
  */
-class User extends \yii\db\ActiveRecord
-{
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'user';
-    }
 
-    /**
-     * {@inheritdoc}
-     */
+class UserAuthorisation extends User implements IdentityInterface
+{
     public function rules()
     {
-        return [
-            [['name', 'email', 'password', 'role'], 'required'],
-            [['name', 'email', 'password'], 'string', 'max' => 50],
-            [['role'], 'string', 'max' => 5],
-            [['name', 'email'], 'unique'],
-            [['email'], 'email'],
-        ];
+        return array_merge(parent::rules());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public static function findIdentity($id)
     {
-        return [
-            'userId' => 'User ID',
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'role' => 'Role',
-        ];
+        return User::findOne($id);
     }
 
-    /**
-     * Gets query for [[Publications]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPublications()
+    public static function findIdentityByAccessToken($token, $type = null)
     {
-        return $this->hasMany(Publication::class, ['userId' => 'userId']);
+        
     }
 
-    /**
-     * Gets query for [[Tokens]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTokens()
+    public function getId()
     {
-        return $this->hasMany(Token::class, ['userId' => 'userId']);
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        
+    }
+
+    public static function findByUsername($username)
+    {
+        return User::findOne(['username' => $username]);
+    }
+
+    public function validatePassword($password)
+    {
+        return ($this->password == $password) ? true : false;
     }
 }

@@ -11,50 +11,21 @@ use Yii;
  * @property int $userId
  * @property string $text
  *
- * @property User $user
  */
-class Publication extends \yii\db\ActiveRecord
+class UserPublication extends Publication
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'publication';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
-        return [
-            [['userId', 'publication'], 'required'],
-            [['userId'], 'integer'],
-            [['text'], 'string'],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userId' => 'userId']],
-        ];
+        return array_merge(parent::rules());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function serializeToArray()
     {
-        return [
-            'publicationId' => 'Publication ID',
-            'userId' => 'User ID',
-            'text' => 'text',
-        ];
-    }
+        $serializedData = [];
+        $serializedData['publicationId'] = $this->publicationId;
+        $serializedData['userId'] = $this->userId;
+        $serializedData['text'] = $this->text;
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['userId' => 'userId']);
+        return $serializedData;
     }
 }

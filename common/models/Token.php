@@ -11,51 +11,25 @@ use Yii;
  * @property int $userId
  * @property string $acessToken
  *
- * @property User $user
  */
-class Token extends \yii\db\ActiveRecord
-{
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'token';
-    }
 
-    /**
-     * {@inheritdoc}
-     */
+ class UserToken extends Token
+ {
     public function rules()
     {
-        return [
-            [['userId', 'acessToken'], 'required'],
-            [['userId'], 'integer'],
-            [['acessToken'], 'string', 'max' => 255],
-            [['acessToken'], 'unique'],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userId' => 'userId']],
-        ];
+        return array_merge(parent::rules());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public static function generateToken($userId)
     {
-        return [
-            'tokenId' => 'Token ID',
-            'userId' => 'User ID',
-            'acessToken' => 'Acess Token',
-        ];
-    }
+        $token = new Token();
+        $token->userId = $userId;
+        $token->acessToken = Yii::$app->getSecurity()->generateRandomString();
+        
+        if (!$token->save()) {
+            return null;
+        }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['userId' => 'userId']);
+        return $token;
     }
-}
+ }
