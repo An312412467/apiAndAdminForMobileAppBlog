@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\UserToken;
-use common\models\UserPublication;
+use common\models\Publication;
 use yii\web\Controller;
 use Yii;
 
@@ -26,73 +26,49 @@ class PublicationsController extends Controller
 
     public function actionCreate()
     {
-        $acessToken = Yii::$app->request->post("acessToken");
-        $text = Yii::$app->request->post("text");
-        $token = UserToken::findOne($acessToken);
+        $model = new \PublicationByCreateForm();
+        $model->load(Yii::$app->request->post());
 
-        if (empty($token)) {
+        if (!$model->createPublication()) {
             return [
-                "error" => "Пользователя с таким токеном не существует"
-            ];
-        }
-
-        if (empty($text)) {
-            return [
-                "error" => "некорректный текст статьи"
-            ];
-        }
-        
-        $publication = new UserPublication();
-        $publication->userId = $token->userId;
-        $publication->text = $text;
-        
-        if (!$publication->save()) {
-            return [
-                "error" => $publication->getErrors()
+                "error" => $model->getErrors(),
             ];
         }
 
         return [
-            "publication" => $publication->serializeToArray()
+            "publication" => $model->createPublication(),
         ];
     }
 
     public function actionPublications()
     {
-        $limit = Yii::$app->request->get("limit", 10);
-        $offset = Yii::$app->request->get("offset", 0);
-        $publicationQuery = UserPublication::find()
-            ->limit($limit)
-            ->offset($offset);
-        $result = [];
-        
-        foreach ($publicationQuery->each() as $publication) {
-            $result[] = $publication->serializeToArray();
+        $model = new \PublicationByPublications();
+        $model->load(Yii::$app->request->get());
+
+        if (!$model->getPublications()) {
+            return [
+                "error" => $model->getErrors(),
+            ];
         }
 
         return [
-            "publication" => $result
+            "publication" => $model->getPublications(),
         ];
     }
 
-    public function adtionUserPublications()
+    public function actionUserPublications()
     {
-        $limit = Yii::$app->request->get("limit", 10);
-        $offset = Yii::$app->request->get("offset", 0);
-        $acessToken = Yii::$app->request->get("acessToken");
-        $user = UserToken::findOne($acessToken);
-        $publicationQuery = UserPublication::find()
-            ->andWhere(['publication.userId' => $user->userId])
-            ->limit($limit)
-            ->offset($offset);
-        $result = [];
-        
-        foreach ($publicationQuery->each() as $publication) {
-            $result[] = $publication->serializeToArray();
+        $model = new \PublicationByUserPublications();
+        $model->load(Yii::$app->request->get());
+
+        if (!$model->getUserPublications()) {
+            return [
+                "error" => $model->addError(),
+            ];
         }
         
         return [
-            "publication" => $result
+            "publication" => $model->getUserPublications(),
         ];
     }
 }

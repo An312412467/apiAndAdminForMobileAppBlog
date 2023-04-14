@@ -13,7 +13,7 @@ use Yii;
  *
  * @property User $user
  */
-class Publication extends \yii\db\ActiveRecord
+class BasePublication extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

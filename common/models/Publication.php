@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use models\BasePublication;
 
 /**
  * This is the model class for table "publication".
@@ -12,7 +12,7 @@ use Yii;
  * @property string $text
  *
  */
-class UserPublication extends Publication
+class Publication extends BasePublication
 {
     public function rules()
     {

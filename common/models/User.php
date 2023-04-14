@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use common\models\User;
 use yii\web\IdentityInterface;
+use models\BaseUser;
 
 /**
  * This is the model class for table "user".
@@ -16,7 +16,7 @@ use yii\web\IdentityInterface;
  *
  */
 
-class UserAuthorisation extends User implements IdentityInterface
+class User extends BaseUser implements IdentityInterface
 {
      public const ROLE_USER = "user";
      public const ROLE_ADMIN = "admin";

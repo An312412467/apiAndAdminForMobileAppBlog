@@ -13,10 +13,10 @@ use Yii;
  * @property string $password
  * @property string $role
  *
- * @property Publication[] $publications
+ * @property BasePublication[] $publications
  * @property BaseToken[] $tokens
  */
-class User extends \yii\db\ActiveRecord
+class BaseUser extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

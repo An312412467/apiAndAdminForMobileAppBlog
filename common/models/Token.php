@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use models\BaseToken;
 
 /**
  * This is the model class for table "token".
@@ -13,7 +14,7 @@ use Yii;
  *
  */
 
- class UserToken extends Token
+ class Token extends BaseToken
  {
     public function rules()
     {
