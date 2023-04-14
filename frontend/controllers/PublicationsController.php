@@ -34,7 +34,7 @@ class PublicationsController extends Controller
         }
 
         return [
-            "publication" => $model->createPublication(),
+            "publication" => $model->serializeToArray(),
         ];
     }
 
@@ -50,7 +50,7 @@ class PublicationsController extends Controller
         }
 
         return [
-            "publication" => $model->getPublications(),
+            "publication" => $model->serializeToArray(),
         ];
     }
 
@@ -66,7 +66,7 @@ class PublicationsController extends Controller
         }
         
         return [
-            "publication" => $model->getUserPublications(),
+            "publication" => $model->serializeToArray(),
         ];
     }
 }

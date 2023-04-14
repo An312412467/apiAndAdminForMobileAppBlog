@@ -8,6 +8,8 @@ class PublicationByPublications extends Model
     public $limit;
     public $offset;
 
+    private $publications;
+
     public  function rules()
     {
         return [
@@ -23,12 +25,23 @@ class PublicationByPublications extends Model
             return false;
         }
 
-        $publicationQuerry = Publication::find()
+        $this->publications = Publication::find()
             ->limit($this->limit)
             ->offset($this->offset);
+
+        if (empty($this->publications)) {
+            $this->addError("error", "Не удалось получить статьи");
+            return false;
+        }
+
+        return true;
+    }
+
+    public function serializeToArray()
+    {
         $result = [];
 
-        foreach ($publicationQuerry->each() as $publication) {
+        foreach ($this->publications->each() as $publication) {
             $result[] = $publication->serializeToArray();
         }
 

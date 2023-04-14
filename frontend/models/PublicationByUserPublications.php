@@ -10,6 +10,8 @@ class PublicationByUserPublications extends Model
     public $offset;
     public $acessToken;
 
+    private $publications;
+
     public  function rules()
     {
         return [
@@ -33,19 +35,25 @@ class PublicationByUserPublications extends Model
             return false;
         }
 
-        $publicationQuery = Publication::find()
+        $this->publications = Publication::find()
             ->andWhere(['publication.userId' => $user->userId])
             ->limit($this->limit)
             ->offset($this->offset);
-        $result = [];
 
-        foreach ($publicationQuery->each() as $publication) {
-            $result[] = $publication->serializeToArray();
+        if (empty($this->publications)) {
+            $this->addError("error", "статьи пользователя не найдены");
+            return false;
         }
 
-        if (empty($result)) {
-            $this->addError("error", "Статьи пользователя не найдены");
-            return false;
+        return true;
+    }
+
+    public function serializeToArray()
+    {
+        $result = [];
+
+        foreach ($this->publications->each() as $publication) {
+            $result[] = $publication->serializeToArray();
         }
 
         return $result;

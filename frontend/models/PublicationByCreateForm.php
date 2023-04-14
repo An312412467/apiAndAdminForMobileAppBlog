@@ -41,8 +41,6 @@ class PublicationByCreateForm extends Model
         }
 
         $this->publication = new Publication();
-        //$publication->userId = $token->userId;
-        //$publication->text = $this->text;
         $this->publication->userId = $token->userId;
         $this->publication->text = $this->text;
 
@@ -52,12 +50,13 @@ class PublicationByCreateForm extends Model
             return false;
         }
 
-        return  $this->publication->serializeToArray();
+        return true;
     }
 
-    protected function serializeToArray()
+    public function serializeToArray()
     {
-        $serializedData = [];
-        $serializedData["publicationId"] = $this->publication;
+        $result = $this->publication->serializeToArray();
+
+        return $result;
     }
 }
