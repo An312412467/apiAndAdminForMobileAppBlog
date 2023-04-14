@@ -4,17 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\Publication $model */
+/** @var common\models\BasePublication $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="publication-form">
+<div class="base-publication-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'userId')->textInput() ?>
 
-    <?= $form->field($model, 'publication')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

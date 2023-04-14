@@ -1,6 +1,6 @@
 <?php
 
-use app\models\User;
+use common\models\User;
 use yii\base\Model;
 
 class LoginBySignUpForm extends Model

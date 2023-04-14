@@ -1,15 +1,15 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
-use common\models\Publication;
-use app\models\PublicationSearch;
+use common\models\BasePublication;
+use backend\models\PublicationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PublicationController implements the CRUD actions for Publication model.
+ * PublicationController implements the CRUD actions for BasePublication model.
  */
 class PublicationController extends Controller
 {
@@ -32,7 +32,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Lists all Publication models.
+     * Lists all BasePublication models.
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Displays a single Publication model.
+     * Displays a single BasePublication model.
      * @param int $publicationId Publication ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class PublicationController extends Controller
     }
 
     /**
-     * Creates a new Publication model.
+     * Creates a new BasePublication model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Publication();
+        $model = new BasePublication();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Updates an existing Publication model.
+     * Updates an existing BasePublication model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $publicationId Publication ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Deletes an existing Publication model.
+     * Deletes an existing BasePublication model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $publicationId Publication ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class PublicationController extends Controller
     }
 
     /**
-     * Finds the Publication model based on its primary key value.
+     * Finds the BasePublication model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $publicationId Publication ID
-     * @return Publication the loaded model
+     * @return BasePublication the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($publicationId)
     {
-        if (($model = Publication::findOne(['publicationId' => $publicationId])) !== null) {
+        if (($model = BasePublication::findOne(['publicationId' => $publicationId])) !== null) {
             return $model;
         }
 

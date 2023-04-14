@@ -1,7 +1,7 @@
 <?php
 
 use yii\base\Model;
-use app\models\User;
+use common\models\User;
 
 class LoginByLoginForm extends Model
 {

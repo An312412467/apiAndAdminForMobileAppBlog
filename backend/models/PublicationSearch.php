@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Publication;
+use common\models\BasePublication;
 
 /**
- * PublicationSearch represents the model behind the search form of `common\models\Publication`.
+ * PublicationSearch represents the model behind the search form of `common\models\BasePublication`.
  */
-class PublicationSearch extends Publication
+class PublicationSearch extends BasePublication
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class PublicationSearch extends Publication
     {
         return [
             [['publicationId', 'userId'], 'integer'],
-            [['publication'], 'safe'],
+            [['text'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class PublicationSearch extends Publication
      */
     public function search($params)
     {
-        $query = Publication::find();
+        $query = BasePublication::find();
 
         // add conditions that should always apply here
 
@@ -62,7 +62,7 @@ class PublicationSearch extends Publication
             'userId' => $this->userId,
         ]);
 
-        $query->andFilterWhere(['like', 'publication', $this->publication]);
+        $query->andFilterWhere(['like', 'text', $this->text]);
 
         return $dataProvider;
     }

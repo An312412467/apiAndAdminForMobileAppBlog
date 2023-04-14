@@ -1,24 +1,24 @@
 <?php
 
-use common\models\User;
+use common\models\BaseUser;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\UserSearch $searchModel */
+/** @var backend\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Users';
+$this->title = 'Base Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="base-user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Base User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'role',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, User $model, $key, $index, $column) {
+                'urlCreator' => function ($action, BaseUser $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'userId' => $model->userId]);
                  }
             ],
