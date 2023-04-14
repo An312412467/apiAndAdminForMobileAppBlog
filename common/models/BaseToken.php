@@ -11,7 +11,7 @@ use Yii;
  * @property int $userId
  * @property string $acessToken
  *
- * @property User $user
+ * @property BaseUser $user
  */
 class Token extends \yii\db\ActiveRecord
 {
@@ -56,6 +56,6 @@ class Token extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['userId' => 'userId']);
+        return $this->hasOne(BaseUser::class, ['userId' => 'userId']);
     }
 }

@@ -61,7 +61,7 @@ class BaseUser extends \yii\db\ActiveRecord
      */
     public function getPublications()
     {
-        return $this->hasMany(Publication::class, ['userId' => 'userId']);
+        return $this->hasMany(BasePublication::class, ['userId' => 'userId']);
     }
 
     /**

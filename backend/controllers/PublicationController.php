@@ -1,9 +1,9 @@
 <?php
 
-namespace backend\controllers;
+namespace app\controllers;
 
 use common\models\Publication;
-use backend\models\PublicationSearch;
+use app\models\PublicationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

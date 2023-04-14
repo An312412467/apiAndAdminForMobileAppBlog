@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use app\models\User;
-use app\models\Token;
 use yii\web\Controller;
 use Yii;
 

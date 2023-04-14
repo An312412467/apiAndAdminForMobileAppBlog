@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\UserToken;
-use common\models\Publication;
 use yii\web\Controller;
 use Yii;
 

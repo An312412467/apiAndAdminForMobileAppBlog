@@ -11,7 +11,7 @@ use Yii;
  * @property int $userId
  * @property string $text
  *
- * @property User $user
+ * @property BaseUser $user
  */
 class BasePublication extends \yii\db\ActiveRecord
 {
@@ -55,6 +55,6 @@ class BasePublication extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['userId' => 'userId']);
+        return $this->hasOne(BaseUser::class, ['userId' => 'userId']);
     }
 }
