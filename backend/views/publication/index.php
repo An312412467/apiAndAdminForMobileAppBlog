@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var backend\models\PublicationSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Base Publications';
+$this->title = 'Publications';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="base-publication-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Base Publication', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Publication', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,9 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'publicationId',
+                'format' => 'html',
+                'value' => function (BasePublication $model) {
+                    return Html::a($model->primaryKey, ['view', 'publicationId' => $model->primaryKey]);
+                },
+            ],
+            [
+                'attribute' => 'userId',
+                'format' => 'html',
+                'value' => function (BasePublication $model) {
+                    return (!empty($model->user)) ? Html::a($model->user->name, ['user/view', 'userId' => $model->userId]) : null;
+                },
+            ],
 
-            'publicationId',
-            'userId',
             'text:ntext',
             [
                 'class' => ActionColumn::className(),

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var backend\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Base Users';
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="base-user-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Base User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,8 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'userId',
-            'name',
+            [
+                'attribute' => 'userId',
+                'format' => 'html',
+                'value' => function (BaseUser $model) {
+                    return Html::a($model->primaryKey, ['view', 'userId' => $model->primaryKey]);
+                },
+            ],
+            [
+                'attribute' => 'name',
+                'format' => 'html',
+                'value' => function (BaseUser $model) {
+                    return (!empty($model)) ? Html::a($model->name, ['user/view', 'userId' => $model->userId]) : null;
+                },
+            ],
             'email:email',
             'password',
             'role',
