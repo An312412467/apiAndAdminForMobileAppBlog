@@ -1,13 +1,15 @@
 <?php
 
+namespace frontend\models;
+
 use yii\base\Model;
 use common\models\Token;
 use common\models\Publication;
 
 class PublicationByUserPublications extends Model
 {
-    public $limit;
-    public $offset;
+    public $limit = 10;
+    public $offset = 0;
     public $acessToken;
 
     private $publications;

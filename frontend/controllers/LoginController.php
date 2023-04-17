@@ -34,7 +34,7 @@ class LoginCotroller extends Controller
         }
 
         return [
-            "acessToken" => $model->login(),
+            "acessToken" => $model->serializeToArray(),
         ];
     }
 
@@ -50,7 +50,7 @@ class LoginCotroller extends Controller
         }
 
         return [
-            "acessToken" => $model->signUp(),
+            "acessToken" => $model->serializeToArray(),
         ];
     }
 }

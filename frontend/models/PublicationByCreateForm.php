@@ -1,5 +1,7 @@
 <?php
 
+namespace frontend\models;
+
 use yii\base\Model;
 use common\models\Token;
 use common\models\Publication;
@@ -55,8 +57,6 @@ class PublicationByCreateForm extends Model
 
     public function serializeToArray()
     {
-        $result = $this->publication->serializeToArray();
-
-        return $result;
+        return $this->publication->serializeToArray();
     }
 }

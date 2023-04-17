@@ -1,12 +1,14 @@
 <?php
 
+namespace frontend\models;
+
 use yii\base\Model;
 use common\models\Publication;
 
 class PublicationByPublications extends Model
 {
-    public $limit;
-    public $offset;
+    public $limit = 10;
+    public $offset = 0;
 
     private $publications;
 

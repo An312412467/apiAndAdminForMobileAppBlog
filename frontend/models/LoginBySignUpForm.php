@@ -1,5 +1,7 @@
 <?php
 
+namespace frontend\models;
+
 use common\models\User;
 use yii\base\Model;
 
@@ -8,6 +10,8 @@ class LoginBySignUpForm extends Model
     public $name;
     public $email;
     public $password;
+
+    private $acessToken;
 
     public function  rules()
     {
@@ -33,7 +37,7 @@ class LoginBySignUpForm extends Model
         }
 
         $user = User::findOne(["name" => $this->name]);
-        $token = Token::generateToken($user->userId);
+        $this->acessToken = Token::generateToken($user->userId);
 
         if (empty($token)) {
             $this->addError("error", "Не удалось сгенерировать токен");
@@ -41,6 +45,11 @@ class LoginBySignUpForm extends Model
             return false;
         }
 
-        return $token;
+        return true;
+    }
+
+    public function serializeToArray()
+    {
+        return $this->acessToken->serializeToArray();
     }
 }

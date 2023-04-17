@@ -33,4 +33,14 @@ use models\BaseToken;
 
         return $token;
     }
+
+    public function serializeToArray()
+    {
+        $serializedData = [];
+        $serializedData["tokenId"] = $this->tokenId;
+        $serializedData["userId"] = $this->userId;
+        $serializedData["acessToken"] = $this->acessToken;
+
+        return $serializedData;
+    }
  }

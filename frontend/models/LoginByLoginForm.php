@@ -1,13 +1,18 @@
 <?php
 
+namespace frontend\models;
+
 use yii\base\Model;
 use common\models\User;
+use common\models\Token;
 
 class LoginByLoginForm extends Model
 {
     public $name;
     public $email;
     public $password;
+
+    private $acessToken;
 
     public function  rules()
     {
@@ -31,8 +36,6 @@ class LoginByLoginForm extends Model
 
     public function login()
     {
-        $user = User::findByUsername($this->name);
-
         if (!$this->validate()) {
             return false;
         }
@@ -44,13 +47,18 @@ class LoginByLoginForm extends Model
         }
 
         $user = User::findOne(["name" => $this->name]);
-        $acessToken = Token::generateToken($user->userId);
+        $this->acessToken = Token::generateToken($user->userId);
 
         if (empty($acessToken)) {
             $this->addError("error", "Не удалось сгенерировать токен");
             return false;
         }
 
-        return $acessToken;
+        return true;
+    }
+
+    public function serializeToArray()
+    {
+        return $this->acessToken->serializeToArray();
     }
 }
